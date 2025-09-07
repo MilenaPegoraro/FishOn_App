@@ -11,10 +11,10 @@ import CadastroPesqueiro from "./CadastroPesqueiro";
 import Login from "./Login";
 import TelaGeralPescador from "./TelaGeralPescador";
 
-// Criação do navigator
+// Criação do navigator 
 const Stack = createStackNavigator();
 
-// Componente da tela inicial (mantenha igual)
+// Componente da tela inicial (commit test)
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
