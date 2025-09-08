@@ -83,13 +83,6 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.textoBotaoConfirmar}>Confirmar</Text>
           </TouchableOpacity>
 
-          {/* Botão Next */}
-          <TouchableOpacity
-            style={[styles.botao, styles.botaoNext]}
-            onPress={() => navigation.navigate('TelaGeralPescador')} // Navega para TelaGeralPescador
-          >
-            <Text style={styles.textoBotaoNext}>Next</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
