@@ -82,7 +82,7 @@ export default function PesquisaScreen({ navigation }) {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#1a2a6c" />
         </TouchableOpacity>
         <Text style={styles.title}>Pesquisa</Text>

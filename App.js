@@ -10,6 +10,7 @@ import CadastroPescador from "./CadastroPescador";
 import CadastroPesqueiro from "./CadastroPesqueiro";
 import Login from "./Login";
 import TelaGeralPescador from "./TelaGeralPescador";
+import CalendarScreen from "./agendamento";
 
 // Criação do navigator 
 const Stack = createStackNavigator();
@@ -78,6 +79,7 @@ export default function App() {
         <Stack.Screen name="CadastroPesqueiro" component={CadastroPesqueiro} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="TelaGeralPescador" component={TelaGeralPescador} />
+        <Stack.Screen name="agendamento" component={CalendarScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
