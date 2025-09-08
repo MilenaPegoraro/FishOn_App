@@ -71,7 +71,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.botoesContainer}>
           <TouchableOpacity
             style={[styles.botao, styles.botaoVoltar]}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('App')}
           >
             <Text style={styles.textoBotaoVoltar}>Voltar</Text>
           </TouchableOpacity>
@@ -179,3 +179,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
