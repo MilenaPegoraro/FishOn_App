@@ -9,6 +9,7 @@ import {
   Switch,
   Alert
 } from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
  
 export default function CadastroPesqueiro({ navigation }) {
   const [nome, setNome] = useState('');
@@ -45,6 +46,22 @@ export default function CadastroPesqueiro({ navigation }) {
     // Aqui você faria a lógica de cadastro
     Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
     // navigation.navigate('Home'); // Descomente para navegar de volta
+  };
+
+  const selecionarAlvara = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
+      // res contém as informações do arquivo selecionado
+      console.log(res);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // Usuário cancelou
+      } else {
+        throw err;
+      }
+    }
   };
  
   return (
@@ -100,7 +117,7 @@ export default function CadastroPesqueiro({ navigation }) {
       {/* Seção de documentos e senha */}
 <View style={styles.secao}>
 <Text style={styles.label}>Anexe seu alvará</Text>
-<TouchableOpacity style={styles.botaoAnexar}>
+<TouchableOpacity style={styles.botaoAnexar} onPress={selecionarAlvara}>
 <Text style={styles.textoBotaoAnexar}>Selecionar arquivo</Text>
 </TouchableOpacity>
 <Text style={styles.label}>Senha *</Text>
