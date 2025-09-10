@@ -53,6 +53,12 @@ function HomeScreen({ navigation }) {
               Já tenho uma conta
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.botao, styles.textoClicavel]}
+            onPress={() => navigation.navigate('TelaGeralPescador')} // Navega para TelaGeralPescador
+          >
+            <Text style={styles.textoClicavel}>Entrar sem Login</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -69,12 +75,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Home"
+        initialRouteName="App"
         screenOptions={{
           headerShown: false
         }}
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="App" component={HomeScreen} />
         <Stack.Screen name="CadastroPescador" component={CadastroPescador} />
         <Stack.Screen name="CadastroPesqueiro" component={CadastroPesqueiro} />
         <Stack.Screen name="Login" component={Login} />
@@ -109,4 +115,11 @@ const styles = StyleSheet.create({
   loginButtonText: { color: "#1a2a6c" },
   footer: { padding: 20, alignItems: "center", marginBottom: 10 },
   footerText: { fontSize: 12, color: "#666" },
+  textoClicavel: {
+    color: "#1a2a6c",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: 'bold',
+    textDecorationLine: 'underline'
+  },
 });

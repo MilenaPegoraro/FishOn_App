@@ -110,7 +110,7 @@ export default function PesquisaScreen({ navigation }) {
           <View key={pesqueiro.id}>
             <TouchableOpacity 
               style={styles.pesqueiroCard}
-              onPress={() => navigation.navigate('DetalhesPesqueiro', { pesqueiro })}
+              onPress={() => navigation.navigate('agendamento', { pesqueiro })}
             >
               <View style={styles.pesqueiroImageContainer}>
                 <Image 

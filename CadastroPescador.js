@@ -41,119 +41,182 @@ const formatarCPF = (valor) => {
     }
   };
 
-  const handleConfirmar = () => {
-    if (!validarEmail(email)) {
-      alert("Digite um email válido.");
-      return;
-    }
-    if (!validarCPF(cpf)) {
-      alert("Digite um CPF válido. Ex: 123.456.789-00");
-      return;
-    }
-    if (!validarTelefone(telefone)) {
-      alert("Digite um telefone válido. Ex: (11) 91234-5678");
-      return;
-    }
-    if (!senha || !confirmarSenha) {
-      alert("Preencha os campos de senha e confirmação de senha.");
-      return;
-    }
+  const handleConfirmar = async () => {
     if (senha !== confirmarSenha) {
       alert("As senhas não coincidem.");
       return;
     }
 
-    alert("Cadastro confirmado!");
-    navigation.navigate("Login");
+    try {
+      const response = await fetch("http://InsiraAquiOIpDaMaquina:3000/usuarios", { 
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nomeCompleto,
+          email,
+          cpf,
+          telefone,
+          senha,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✅ Cadastro realizado com sucesso!");
+        // opcional: limpar campos
+        setNomeCompleto("");
+        setEmail("");
+        setCpf("");
+        setTelefone("");
+        setSenha("");
+        setConfirmarSenha("");
+      } else {
+        alert("❌ Erro: " + data.message);
+      }
+    } catch (error) {
+      alert("Erro de conexão com o servidor: " + error.message);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
 
-      <Text style={styles.title}>Cadastro Pescador</Text>
-      <Text style={styles.subtitle}>Crie uma conta como pescador</Text>
+    <Text style={styles.titulo}>Crie uma conta como pescador</Text>
 
-      <View style={styles.formContainer}>
+
+
+      <View style={styles.contentContainer}>
+
+        <Text style={styles.label}>Nome completo *</Text> 
         <TextInput
           style={styles.input}
-          placeholder="Nome completo"
+          placeholder="Digite seu nome completo"
           value={nomeCompleto}
           onChangeText={setNomeCompleto}
         />
+        <Text style={styles.label}>Email *</Text>
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="Digite seu Email"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
           autoCapitalize="none"
         />
+        <Text style={styles.label}>CPF *</Text>
         <TextInput
           style={styles.input}
-          placeholder="CPF"
+          placeholder="Digite seu CPF"
           value={cpf}
           onChangeText={(texto) => setCpf(formatarCPF(texto))}
           keyboardType="numeric"
         />
+        <Text style={styles.label}>Telefone *</Text>
         <TextInput
           style={styles.input}
-          placeholder="Telefone"
+          placeholder="Digite seu Telefone"
           value={telefone}
           onChangeText={(texto) => setTelefone(formatarTelefone(texto))}
           keyboardType="phone-pad"
         />
+        <Text style={styles.label}>Senha *</Text>
         <TextInput
           style={styles.input}
-          placeholder="Senha"
+          placeholder="Digite sua Senha"
           secureTextEntry
           value={senha}
           onChangeText={setSenha}
         />
+        <Text style={styles.label}>Confirme a senha *</Text>
         <TextInput
           style={styles.input}
-          placeholder="Confirme a senha"
+          placeholder="Confirme sua senha"
           secureTextEntry
           value={confirmarSenha}
           onChangeText={setConfirmarSenha}
         />
       </View>
 
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>Voltar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.confirmButton]} onPress={handleConfirmar}>
-          <Text style={styles.buttonText}>Confirmar</Text>
-        </TouchableOpacity>
+      {/* Botões de ação */}
+      <View style={styles.botoesContainer}>
+      <TouchableOpacity 
+                style={[styles.botao, styles.botaoVoltar]}
+          onPress={() => navigation.goBack()}
+      >
+      <Text style={styles.textoBotaoVoltar}>Voltar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+                style={[styles.botao, styles.botaoConfirmar]}
+                onPress={handleConfirmar}
+      >
+      <Text style={styles.textoBotaoConfirmar}>Confirmar</Text>
+      </TouchableOpacity>
       </View>
+
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f5f5f5", paddingTop: 40, alignItems: "center" },
-  title: { fontSize: 24, fontWeight: "bold", color: "#1a2a6c", marginBottom: 20 },
-  subtitle: { fontSize: 16, color: "#666", marginBottom: 20 },
-  formContainer: { width: "80%", marginBottom: 40 },
-  input: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 15,
-    paddingLeft: 10,
+
+  contentContainer: {
+    padding: 20,
+    paddingBottom: 40,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#1a2a6c',
+  },
+  label: {
     fontSize: 16,
-    backgroundColor: "#fff",
+    fontWeight: '600',
+    marginBottom: 5,
+    marginTop: 10,
+    color: '#333',
   },
-  buttonsContainer: { width: "80%" },
-  button: {
-    paddingVertical: 15,
-    backgroundColor: "#1a2a6c",
-    borderRadius: 10,
-    alignItems: "center",
-    marginBottom: 15,
+  input: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
   },
-  confirmButton: { backgroundColor: "#fdbb2d" },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
+    botao: {
+    flex: 1,
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  botaoVoltar: {
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: '#1a2a6c',
+  },
+  textoBotaoVoltar: {
+    color: '#1a2a6c',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  botaoConfirmar: {
+    backgroundColor: '#1a2a6c',
+  },
+  textoBotaoConfirmar: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+    botoesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 30,
+  },
 });

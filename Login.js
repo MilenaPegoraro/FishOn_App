@@ -71,7 +71,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.botoesContainer}>
           <TouchableOpacity
             style={[styles.botao, styles.botaoVoltar]}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('App')}
           >
             <Text style={styles.textoBotaoVoltar}>Voltar</Text>
           </TouchableOpacity>
@@ -83,13 +83,6 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.textoBotaoConfirmar}>Confirmar</Text>
           </TouchableOpacity>
 
-          {/* Botão Next */}
-          <TouchableOpacity
-            style={[styles.botao, styles.botaoNext]}
-            onPress={() => navigation.navigate('TelaGeralPescador')} // Navega para TelaGeralPescador
-          >
-            <Text style={styles.textoBotaoNext}>Next</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -186,3 +179,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
