@@ -41,30 +41,44 @@ const formatarCPF = (valor) => {
     }
   };
 
-  const handleConfirmar = () => {
-    if (!validarEmail(email)) {
-      alert("Digite um email válido.");
-      return;
-    }
-    if (!validarCPF(cpf)) {
-      alert("Digite um CPF válido. Ex: 123.456.789-00");
-      return;
-    }
-    if (!validarTelefone(telefone)) {
-      alert("Digite um telefone válido. Ex: (11) 91234-5678");
-      return;
-    }
-    if (!senha || !confirmarSenha) {
-      alert("Preencha os campos de senha e confirmação de senha.");
-      return;
-    }
+  const handleConfirmar = async () => {
     if (senha !== confirmarSenha) {
       alert("As senhas não coincidem.");
       return;
     }
 
-    alert("Cadastro confirmado!");
-    navigation.navigate("Login");
+    try {
+      const response = await fetch("http://InsiraAquiOIpDaMaquina:3000/usuarios", { 
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nomeCompleto,
+          email,
+          cpf,
+          telefone,
+          senha,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✅ Cadastro realizado com sucesso!");
+        // opcional: limpar campos
+        setNomeCompleto("");
+        setEmail("");
+        setCpf("");
+        setTelefone("");
+        setSenha("");
+        setConfirmarSenha("");
+      } else {
+        alert("❌ Erro: " + data.message);
+      }
+    } catch (error) {
+      alert("Erro de conexão com o servidor: " + error.message);
+    }
   };
 
   return (
